@@ -729,15 +729,122 @@
             color: #fca5a5;
         }
 
-        .logo-container {
+        .empty-state {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            padding: 40px 20px;
+            text-align: center;
+            color: #9ca3af;
         }
 
-        .logo-container .logo-fixed {
-            margin-bottom: 0;
+        .empty-state i {
+            font-size: 64px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            max-width: 400px;
+        }
+
+        .dark .empty-state {
+            color: #6b7280;
+        }
+
+        .dark .empty-state h3 {
+            color: #94a3b8;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .status-badge.otimo {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .status-badge.bom {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .status-badge.regular {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .status-badge.ruim {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .dark .status-badge.otimo {
+            background: #064e3b;
+            color: #6ee7b7;
+        }
+
+        .dark .status-badge.bom {
+            background: #1e3a5f;
+            color: #93c5fd;
+        }
+
+        .dark .status-badge.regular {
+            background: #451a03;
+            color: #fcd34d;
+        }
+
+        .dark .status-badge.ruim {
+            background: #450a0a;
+            color: #fca5a5;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 9999px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .dark .progress-bar-container {
+            background: #334155;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 0.8s ease;
+        }
+
+        .progress-bar-fill.otimo {
+            background: #22c55e;
+        }
+        .progress-bar-fill.bom {
+            background: #3b82f6;
+        }
+        .progress-bar-fill.regular {
+            background: #eab308;
+        }
+        .progress-bar-fill.ruim {
+            background: #ef4444;
         }
     </style>
 </head>
@@ -748,154 +855,20 @@
         // ============================================================
         // LOGO - IMAGEM LOCAL
         // ============================================================
-        var LOGO_BASE64 = "LOGOAC.png"; // Arquivo na mesma pasta
+        var LOGO_BASE64 = "LOGOAC.png";
 
         // ============================================================
-        // DADOS MOCK
+        // ESTADO INICIAL VAZIO
         // ============================================================
         var DADOS_INICIAIS = {
-            classes: [{
-                id: '3ano-a',
-                name: '3º Ano A - Ensino Secundário',
-                studentCount: 5,
-                average: 7.8,
-                lastActivity: 'Ficha Global de Português',
-                status: 'success',
-                totalAulas: 10,
-                students: [{
-                    id: 'std-pedro',
-                    number: 1,
-                    name: 'Pedro H. Alves',
-                    gpa: 8.5,
-                    lastGrade: 8.5,
-                    testCount: 4,
-                    successRate: 85,
-                    trend: 'up',
-                    faltas: 2,
-                    presencas: 8,
-                    history: [
-                        { id: 't1', title: 'Ficha Global de Português', grade: 8.5, date: '12 Mai 2026',
-                            correct: 17, wrong: 3 },
-                        { id: 't2', title: 'Teste de Gramática', grade: 7.0, date: '28 Abr 2026',
-                            correct: 14, wrong: 6 },
-                        { id: 't3', title: 'Interpretação Textual I', grade: 9.0, date: '10 Mar 2026',
-                            correct: 18, wrong: 2 },
-                        { id: 't4', title: 'Ficha Diagnóstica', grade: 9.5, date: '15 Fev 2026',
-                            correct: 19, wrong: 1 }
-                    ]
-                }, {
-                    id: 'std-carlos',
-                    number: 2,
-                    name: 'Carlos Eduardo Souza',
-                    gpa: 7.0,
-                    lastGrade: 7.0,
-                    testCount: 3,
-                    successRate: 70,
-                    trend: 'up',
-                    faltas: 1,
-                    presencas: 9,
-                    history: [
-                        { id: 't1', title: 'Ficha Global de Português', grade: 7.0, date: '12 Mai 2026',
-                            correct: 14, wrong: 6 },
-                        { id: 't2', title: 'Teste de Gramática', grade: 6.5, date: '28 Abr 2026',
-                            correct: 13, wrong: 7 },
-                        { id: 't3', title: 'Interpretação Textual I', grade: 7.5, date: '10 Mar 2026',
-                            correct: 15, wrong: 5 }
-                    ]
-                }, {
-                    id: 'std-ana',
-                    number: 3,
-                    name: 'Ana Carolina Mendes',
-                    gpa: 9.2,
-                    lastGrade: 9.5,
-                    testCount: 4,
-                    successRate: 92,
-                    trend: 'up',
-                    faltas: 0,
-                    presencas: 10,
-                    history: [
-                        { id: 't1', title: 'Ficha Global de Português', grade: 9.5, date: '12 Mai 2026',
-                            correct: 19, wrong: 1 },
-                        { id: 't2', title: 'Teste de Gramática', grade: 9.0, date: '28 Abr 2026',
-                            correct: 18, wrong: 2 },
-                        { id: 't3', title: 'Interpretação Textual I', grade: 8.5, date: '10 Mar 2026',
-                            correct: 17, wrong: 3 },
-                        { id: 't4', title: 'Ficha Diagnóstica', grade: 10.0, date: '15 Fev 2026',
-                            correct: 20, wrong: 0 }
-                    ]
-                }, {
-                    id: 'std-bruno',
-                    number: 4,
-                    name: 'Bruno Miguel Costa',
-                    gpa: 5.5,
-                    lastGrade: 5.0,
-                    testCount: 4,
-                    successRate: 55,
-                    trend: 'down',
-                    faltas: 4,
-                    presencas: 6,
-                    history: [
-                        { id: 't1', title: 'Ficha Global de Português', grade: 5.0, date: '12 Mai 2026',
-                            correct: 10, wrong: 10 },
-                        { id: 't2', title: 'Teste de Gramática', grade: 5.5, date: '28 Abr 2026',
-                            correct: 11, wrong: 9 },
-                        { id: 't3', title: 'Interpretação Textual I', grade: 6.0, date: '10 Mar 2026',
-                            correct: 12, wrong: 8 },
-                        { id: 't4', title: 'Ficha Diagnóstica', grade: 5.5, date: '15 Fev 2026',
-                            correct: 11, wrong: 9 }
-                    ]
-                }, {
-                    id: 'std-julia',
-                    number: 5,
-                    name: 'Júlia Santos Ferreira',
-                    gpa: 4.8,
-                    lastGrade: 4.5,
-                    testCount: 2,
-                    successRate: 48,
-                    trend: 'down',
-                    faltas: 3,
-                    presencas: 7,
-                    history: [
-                        { id: 't1', title: 'Ficha Global de Português', grade: 4.5, date: '12 Mai 2026',
-                            correct: 9, wrong: 11 },
-                        { id: 't2', title: 'Teste de Gramática', grade: 5.0, date: '28 Abr 2026',
-                            correct: 10, wrong: 10 }
-                    ]
-                }],
-                statistics: {
-                    averageAttendance: '94%',
-                    worstQuestion: 'Questão 12 (Sintaxe)',
-                    heatmap: { 'Interpretação': 85, 'Gramática': 68, 'Pontuação': 74, 'Ortografia': 90 }
-                }
-            }, {
-                id: '8ano-c',
-                name: '8º Ano C - Ensino Básico',
-                studentCount: 18,
-                average: 6.5,
-                lastActivity: 'Ficha de Leitura Crítica',
-                status: 'warning',
-                totalAulas: 8,
-                students: [],
-                statistics: { averageAttendance: '89%', worstQuestion: 'Questão 8 (Morfologia)',
-                    heatmap: { 'Interpretação': 70, 'Gramática': 55, 'Pontuação': 60, 'Ortografia': 78 } }
-            }, {
-                id: '1ano-b',
-                name: '1º Ano B - Ensino Secundário',
-                studentCount: 22,
-                average: 5.4,
-                lastActivity: 'Simulado ENEM Gramática',
-                status: 'danger',
-                totalAulas: 6,
-                students: [],
-                statistics: { averageAttendance: '85%', worstQuestion: 'Questão 5 (Semântica)',
-                    heatmap: { 'Interpretação': 60, 'Gramática': 48, 'Pontuação': 50, 'Ortografia': 65 } }
-            }],
-            notifications: [
-                { id: 1, text: 'Correção automática concluída para 3º Ano A', time: 'Há 5 min', unread: true },
-                { id: 2, text: 'Cópia de segurança em nuvem sincronizada com sucesso', time: 'Há 1 hora',
-                    unread: false }
-            ]
+            classes: [],
+            notifications: []
         };
+
+        // ============================================================
+        // NOTA MÍNIMA PARA APROVAÇÃO
+        // ============================================================
+        var NOTA_MINIMA_APROVACAO = 6.0;
 
         // ============================================================
         // ESTADO DA APLICAÇÃO
@@ -905,10 +878,10 @@
             sidebarOpen: false,
             theme: 'light',
 
-            classes: JSON.parse(JSON.stringify(DADOS_INICIAIS.classes)),
+            classes: [],
             selectedClass: null,
             selectedStudent: null,
-            notifications: JSON.parse(JSON.stringify(DADOS_INICIAIS.notifications)),
+            notifications: [],
             showNotifications: false,
 
             officialGabarito: null,
@@ -923,12 +896,12 @@
             selectedHistoricalTest: null,
 
             profileImage: null,
-            profileName: 'Prof. Helena Silva',
-            profileBio: 'Coordenadora de Língua Portuguesa',
-            profileEmail: 'helena.silva@escola.pt',
+            profileName: 'Professor',
+            profileBio: 'Docente',
+            profileEmail: 'professor@escola.com',
             aiResult: null,
 
-            email: 'professor@escola.pt',
+            email: 'professor@escola.com',
             password: '123456',
             isLoading: false,
 
@@ -986,8 +959,8 @@
             studentScan: null,
             isProcessing: false,
 
-            selectedTargetClass: '3ano-a',
-            selectedTargetStudent: 'std-pedro',
+            selectedTargetClass: '',
+            selectedTargetStudent: '',
             errorMsg: '',
 
             localOfficial: null,
@@ -999,7 +972,15 @@
             scanStream: null,
 
             mostrarModalFalta: false,
-            mostrarModalPresenca: false
+            mostrarModalPresenca: false,
+            mostrarModalNota: false,
+
+            modalNota: {
+                alunoId: '',
+                titulo: '',
+                nota: 0,
+                data: ''
+            }
         };
 
         // ============================================================
@@ -1014,6 +995,24 @@
             if (grade >= 7.0) return 'text-green-500';
             if (grade >= 5.0) return 'text-yellow-500';
             return 'text-red-500';
+        }
+
+        function getStatusClass(grade) {
+            if (grade >= 7.0) return 'otimo';
+            if (grade >= 5.0) return 'regular';
+            return 'ruim';
+        }
+
+        function getStatusLabel(grade) {
+            if (grade >= 7.0) return 'Ótimo';
+            if (grade >= 5.0) return 'Regular';
+            return 'Ruim';
+        }
+
+        function getStatusIcon(grade) {
+            if (grade >= 7.0) return 'fa-star';
+            if (grade >= 5.0) return 'fa-minus-circle';
+            return 'fa-exclamation-triangle';
         }
 
         function generateId() {
@@ -1056,11 +1055,17 @@
             return 'baixa';
         }
 
+        // ============================================================
+        // CÁLCULO DE ESTATÍSTICAS COMPLETAS
+        // ============================================================
         function calcularEstatisticasTurma(students, totalAulas) {
             if (!students || students.length === 0) {
                 return {
                     averageAttendance: '0%',
                     worstQuestion: '-',
+                    mediaTurma: 0,
+                    aprovados: 0,
+                    reprovados: 0,
                     heatmap: { 'Interpretação': 0, 'Gramática': 0, 'Pontuação': 0, 'Ortografia': 0 }
                 };
             }
@@ -1068,6 +1073,8 @@
             var totalGpa = 0;
             var totalSuccess = 0;
             var totalPresencas = 0;
+            var aprovados = 0;
+            var reprovados = 0;
             var heatmap = { 'Interpretação': 0, 'Gramática': 0, 'Pontuação': 0, 'Ortografia': 0 };
 
             for (var i = 0; i < students.length; i++) {
@@ -1076,9 +1083,16 @@
                 totalSuccess += s.successRate || 0;
                 var presencaPercent = calcularPresencaAluno(s, totalAulas);
                 totalPresencas += presencaPercent;
+
+                if ((s.gpa || 0) >= NOTA_MINIMA_APROVACAO) {
+                    aprovados++;
+                } else {
+                    reprovados++;
+                }
             }
 
-            var avgGpa = (totalGpa / students.length).toFixed(1);
+            var avgGpa = (totalGpa / students.length);
+            var mediaTurma = parseFloat(avgGpa.toFixed(1));
             var avgSuccess = Math.round(totalSuccess / students.length);
             var avgPresenca = students.length > 0 ? Math.round(totalPresencas / students.length) : 0;
 
@@ -1097,6 +1111,9 @@
             return {
                 averageAttendance: avgPresenca + '%',
                 worstQuestion: worstQuestion,
+                mediaTurma: mediaTurma,
+                aprovados: aprovados,
+                reprovados: reprovados,
                 heatmap: {
                     'Interpretação': Math.round(avgSuccess * 0.85),
                     'Gramática': Math.round(avgSuccess * 0.72),
@@ -1116,7 +1133,8 @@
                     lastGrade: 0,
                     testCount: 0,
                     successRate: 0,
-                    trend: 'up'
+                    trend: 'up',
+                    status: 'regular'
                 };
             }
 
@@ -1135,12 +1153,19 @@
             var gpa = parseFloat((sum / total).toFixed(1));
             var successRate = Math.round(successSum / total);
 
+            var trend = 'up';
+            if (history.length >= 2) {
+                var lastTwo = history.slice(-2);
+                if (lastTwo[1].grade < lastTwo[0].grade) trend = 'down';
+            }
+
             return {
                 gpa: gpa,
                 lastGrade: last.grade || 0,
                 testCount: total,
                 successRate: successRate,
-                trend: 'up'
+                trend: trend,
+                status: getStatusClass(gpa)
             };
         }
 
@@ -1150,7 +1175,40 @@
             student.lastGrade = stats.lastGrade;
             student.testCount = stats.testCount;
             student.successRate = stats.successRate;
+            student.trend = stats.trend;
+            student.status = stats.status;
             return student;
+        }
+
+        // ============================================================
+        // AVALIAÇÃO DO ALUNO EM RELAÇÃO À TURMA
+        // ============================================================
+        function avaliarAluno(student, mediaTurma) {
+            if (!student || mediaTurma === undefined) return { status: 'regular', label: 'Regular', diff: 0 };
+
+            var diff = student.gpa - mediaTurma;
+            var status = 'regular';
+            var label = 'Regular';
+
+            if (diff >= 1.0) {
+                status = 'otimo';
+                label = 'Ótimo (Acima da média)';
+            } else if (diff >= 0.5) {
+                status = 'bom';
+                label = 'Bom (Próximo da média)';
+            } else if (diff >= -0.5) {
+                status = 'regular';
+                label = 'Regular (Na média)';
+            } else {
+                status = 'ruim';
+                label = 'Ruim (Abaixo da média)';
+            }
+
+            return {
+                status: status,
+                label: label,
+                diff: diff
+            };
         }
 
         // ============================================================
@@ -1279,7 +1337,7 @@
         }
 
         // ============================================================
-        // LOGO - COM IMAGEM E TEXTO ABAIXO
+        // LOGO
         // ============================================================
         function renderLogo(className) {
             className = className || 'w-24 h-24';
@@ -1288,9 +1346,6 @@
                 '</div>';
         }
 
-        // ============================================================
-        // TEXTO DA LOGO - COM TÍTULO E SLOGAN
-        // ============================================================
         function renderLogoText() {
             return '<div class="text-center mt-3">' +
                 '<h1 class="text-2xl font-black tracking-widest text-[#7aa2a1] dark:text-[#a0c4c3]">AUTOMATIC CORRECTION</h1>' +
@@ -1355,7 +1410,7 @@
         }
 
         // ============================================================
-        // SPLASH - COM LOGO E TEXTO
+        // SPLASH
         // ============================================================
         function renderSplash() {
             return '<div class="flex-1 flex flex-col items-center justify-center p-8 bg-white dark:bg-slate-800 cursor-pointer" onclick="navigateTo(\'login\')">' +
@@ -1368,7 +1423,7 @@
         }
 
         // ============================================================
-        // LOGIN - COM LOGO E TEXTO
+        // LOGIN
         // ============================================================
         function renderLogin() {
             if (App.isLoading) {
@@ -1403,14 +1458,14 @@
                 render();
                 setTimeout(function() {
                     App.isLoading = false;
-                    App.user = { name: 'Prof. Helena Silva', email: App.email };
+                    App.user = { name: App.profileName, email: App.email };
                     navigateTo('dashboard');
                 }, 1500);
             }
         }
 
         // ============================================================
-        // REGISTER - COM LOGO E TEXTO
+        // REGISTER
         // ============================================================
         function renderRegister() {
             return '<div class="flex-1 flex flex-col items-center py-10 px-8 bg-white dark:bg-slate-800 max-w-md mx-auto w-full">' +
@@ -1432,7 +1487,7 @@
         }
 
         // ============================================================
-        // SUCCESS - COM LOGO E TEXTO
+        // SUCCESS
         // ============================================================
         function renderSuccess() {
             return '<div class="flex-1 flex flex-col items-center justify-center p-8 bg-white dark:bg-slate-800 max-w-md mx-auto w-full">' +
@@ -1446,7 +1501,7 @@
         }
 
         // ============================================================
-        // DASHBOARD - COM LOGO E TEXTO
+        // DASHBOARD
         // ============================================================
         function renderDashboard() {
             var items = [
@@ -1572,6 +1627,21 @@
         // ============================================================
         function renderSalas() {
             var classesHtml = '';
+
+            if (App.classes.length === 0) {
+                return '<div class="flex-1 flex flex-col bg-white dark:bg-slate-800 max-w-4xl mx-auto w-full">' +
+                    renderSimpleHeader('Salas & Turmas') +
+                    '<div class="flex-1 p-6 flex flex-col items-center justify-center">' +
+                    '<div class="empty-state">' +
+                    '<i class="fas fa-school"></i>' +
+                    '<h3>Nenhuma turma cadastrada</h3>' +
+                    '<p>Comece criando sua primeira turma clicando no botão "Nova Turma" acima.</p>' +
+                    '</div>' +
+                    '<button onclick="navigateTo(\'nova-turma\')" class="btn-solid max-w-xs mt-4 flex items-center justify-center gap-2">' +
+                    '<i class="fas fa-plus"></i> Nova Turma</button>' +
+                    '</div></div>';
+            }
+
             for (var i = 0; i < App.classes.length; i++) {
                 var c = App.classes[i];
                 var totalAulas = c.totalAulas || 0;
@@ -1588,13 +1658,21 @@
                 var presencaBadge = '<span class="presenca-badge ' + presencaClass + '"><i class="fas fa-user-check"></i> ' +
                     presencaMedia + '%</span>';
 
+                var statusTurma = c.status || 'success';
+                var statusLabel = statusTurma === 'success' ? '✅ Excelente' : statusTurma === 'warning' ?
+                    '⚠️ Atenção' : '🔴 Crítico';
+
                 classesHtml +=
                     '<div class="bg-white dark:bg-slate-700 rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-slate-600 flex flex-col justify-between relative overflow-hidden hover:shadow-md transition-shadow">' +
                     '<div class="absolute top-0 left-0 w-2 h-full ' + getStatusColor(c.status) + '"></div>' +
                     '<div class="pl-3">' +
                     '<div class="flex justify-between items-start mb-2"><h4 class="text-lg font-black text-gray-800 dark:text-white">' +
-                    c.name + '</h4><span class="w-3.5 h-3.5 rounded-full ' + getStatusColor(c.status) +
-                    '"></span></div>' +
+                    c.name + '</h4><span class="text-xs font-semibold px-2 py-1 rounded-full ' + (c.status ===
+                        'success' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' :
+                        c.status === 'warning' ?
+                        'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' :
+                        'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400') + '">' + statusLabel +
+                    '</span></div>' +
                     '<p class="text-xs text-gray-500 dark:text-gray-400 font-semibold mb-1">Média Geral: <span class="text-gray-800 dark:text-gray-100 font-bold">' +
                     c.average + ' / 10</span></p>' +
                     '<p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Total Alunos: <span class="text-gray-800 dark:text-gray-100 font-bold">' +
@@ -1615,7 +1693,7 @@
                 renderSimpleHeader('Salas & Turmas') +
                 '<div class="p-6 md:p-8 flex-1">' +
                 '<div class="flex justify-between items-center mb-6">' +
-                '<h3 class="text-gray-400 dark:text-gray-500 font-bold text-xs tracking-widest uppercase">As minhas turmas ativas</h3>' +
+                '<h3 class="text-gray-400 dark:text-gray-500 font-bold text-xs tracking-widest uppercase">Minhas turmas ativas</h3>' +
                 '<button onclick="navigateTo(\'nova-turma\')" class="flex items-center gap-1 text-xs font-black uppercase text-[#7aa2a1] hover:underline"><i class="fas fa-plus"></i> Nova Turma</button>' +
                 '</div>' +
                 '<div class="grid md:grid-cols-2 gap-6">' + classesHtml + '</div></div></div>';
@@ -1643,7 +1721,7 @@
         }
 
         // ============================================================
-        // SALA DETALHE - COM REGISTRO DE FALTA E PRESENÇA
+        // SALA DETALHE
         // ============================================================
         function renderSalaDetalhe() {
             var cls = App.selectedClass;
@@ -1726,6 +1804,44 @@
                 }
             }
 
+            // Modal de Nota
+            var modalNotaHtml = '';
+            if (App.mostrarModalNota) {
+                var alunoSelecionado3 = null;
+                for (var mi3 = 0; mi3 < students.length; mi3++) {
+                    if (students[mi3].id === App.modalNota.alunoId) {
+                        alunoSelecionado3 = students[mi3];
+                        break;
+                    }
+                }
+                if (alunoSelecionado3) {
+                    modalNotaHtml =
+                        '<div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">' +
+                        '<div class="bg-white dark:bg-slate-800 rounded-3xl p-6 max-w-md w-full shadow-2xl">' +
+                        '<h3 class="text-lg font-black text-gray-800 dark:text-white mb-4"><i class="fas fa-graduation-cap text-[#7aa2a1]"></i> Adicionar Nota</h3>' +
+                        '<p class="text-sm text-gray-600 dark:text-gray-300 mb-4">Aluno: <strong>' + alunoSelecionado3
+                        .name + '</strong></p>' +
+                        '<p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Média atual: <strong>' + alunoSelecionado3
+                            .gpa + ' / 10</strong></p>' +
+                        '<div class="space-y-4">' +
+                        '<div><label class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5 block">Título da Prova</label>' +
+                        '<input type="text" class="input-style" value="' + App.modalNota.titulo +
+                        '" onchange="App.modalNota.titulo=this.value" placeholder="Ex: Prova Trimestral" /></div>' +
+                        '<div><label class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5 block">Nota (0-10)</label>' +
+                        '<input type="number" class="input-style" value="' + App.modalNota.nota +
+                        '" min="0" max="10" step="0.5" onchange="App.modalNota.nota=parseFloat(this.value)||0" /></div>' +
+                        '<div><label class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1.5 block">Data</label>' +
+                        '<input type="date" class="input-style" value="' + (App.modalNota.data || new Date()
+                            .toISOString().split('T')[0]) +
+                        '" onchange="App.modalNota.data=this.value" /></div>' +
+                        '</div>' +
+                        '<div class="flex gap-3 mt-6">' +
+                        '<button onclick="confirmarNota()" class="flex-1 btn-solid bg-[#7aa2a1] hover:bg-[#688f8e]">Adicionar Nota</button>' +
+                        '<button onclick="cancelarNota()" class="flex-1 btn-secondary">Cancelar</button>' +
+                        '</div></div></div>';
+                }
+            }
+
             var contentHtml = '';
             if (!showStats) {
                 var studentsHtml = '';
@@ -1734,20 +1850,38 @@
                         var s = students[si];
                         var trendIcon = s.trend === 'up' ? '<i class="fas fa-arrow-up text-green-500"></i>' :
                             '<i class="fas fa-arrow-down text-red-500"></i>';
+
                         var bars = '';
                         var hist = s.history || [];
                         var limit = Math.min(4, hist.length);
                         for (var hi = hist.length - 1; hi >= Math.max(0, hist.length - 4); hi--) {
                             var grade = hist[hi].grade;
-                            var color = grade >= 7.0 ? 'bg-green-400' : 'bg-red-400';
+                            var color = grade >= 7.0 ? 'bg-green-400' : (grade >= 5.0 ? 'bg-yellow-400' :
+                                'bg-red-400');
                             bars += '<div class="w-3.5 rounded-t-sm transition-all ' + color +
                                 '" style="height:' + (grade * 10) + '%;" title="Nota: ' + grade + '"></div>';
                         }
+
                         var initials = getInitials(s.name);
                         var presencaPercent = calcularPresencaAluno(s, totalAulas);
                         var presencaClass = getPresencaClass(presencaPercent);
                         var presencaBadge = '<span class="presenca-badge ' + presencaClass + '">' + presencaPercent +
-                            '% (' + s.presencas + '/' + totalAulas + ')</span>';
+                            '%</span>';
+
+                        // Avaliar aluno em relação à turma
+                        var avaliacao = avaliarAluno(s, stats.mediaTurma);
+                        var statusLabel = avaliacao.label;
+                        var statusClass = avaliacao.status;
+                        var diffLabel = avaliacao.diff >= 0 ? '+' + avaliacao.diff.toFixed(1) : avaliacao.diff.toFixed(
+                        1);
+
+                        var statusBadge = '<span class="status-badge ' + statusClass + '"><i class="fas ' +
+                            getStatusIcon(s.gpa) + '"></i> ' + statusLabel + '</span>';
+
+                        var aprovado = s.gpa >= NOTA_MINIMA_APROVACAO;
+                        var aprovadoBadge = aprovado ?
+                            '<span class="text-xs font-bold text-green-500"><i class="fas fa-check-circle"></i> Aprovado</span>' :
+                            '<span class="text-xs font-bold text-red-500"><i class="fas fa-times-circle"></i> Reprovado</span>';
 
                         studentsHtml +=
                             '<div class="bg-white dark:bg-slate-700 border border-gray-100 dark:border-slate-600 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col sm:flex-row items-center justify-between gap-4">' +
@@ -1757,25 +1891,30 @@
                             s.name + ' ' + trendIcon +
                             '</h4><p class="text-xs text-gray-400 dark:text-gray-500 font-bold uppercase mt-0.5">Nº ' +
                             s.number + ' | ' + s.testCount + ' provas</p>' +
-                            '<div class="flex items-center gap-2 mt-1">' + presencaBadge +
+                            '<div class="flex items-center gap-2 mt-1 flex-wrap">' + presencaBadge +
                             ' | Faltas: ' + (s.faltas || 0) +
+                            ' | ' + aprovadoBadge +
                             '</div></div></div>' +
                             '<div class="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">' +
                             '<div class="flex items-end gap-1.5 h-10 w-24">' + bars + '</div>' +
                             '<div class="text-right"><p class="text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase">Média</p><p class="text-lg font-black ' +
-                            getGradeColor(s.gpa) + '">' + s.gpa + '</p></div>' +
+                            getGradeColor(s.gpa) + '">' + s.gpa + '</p>' +
+                            '<p class="text-[10px] text-gray-400 dark:text-gray-500">' + statusBadge +
+                            '</p></div>' +
                             '<div class="flex flex-wrap gap-1">' +
+                            '<button onclick="abrirModalNota(\'' + s.id +
+                            '\')" class="btn-info text-xs py-1 px-2" title="Adicionar Nota"><i class="fas fa-graduation-cap"></i></button>' +
                             '<button onclick="abrirModalFalta(\'' + s.id +
-                            '\')" class="btn-danger text-xs py-1 px-2"><i class="fas fa-user-slash"></i></button>' +
+                            '\')" class="btn-danger text-xs py-1 px-2" title="Registrar Falta"><i class="fas fa-user-slash"></i></button>' +
                             '<button onclick="abrirModalPresenca(\'' + s.id +
-                            '\')" class="btn-success text-xs py-1 px-2"><i class="fas fa-user-check"></i></button>' +
+                            '\')" class="btn-success text-xs py-1 px-2" title="Registrar Presença"><i class="fas fa-user-check"></i></button>' +
                             '<button onclick="selectStudent(\'' + s.id +
-                            '\')" class="btn-secondary text-xs py-1 px-2"><i class="fas fa-eye"></i></button>' +
+                            '\')" class="btn-secondary text-xs py-1 px-2" title="Ver Detalhes"><i class="fas fa-eye"></i></button>' +
                             '</div></div></div>';
                     }
                 } else {
                     studentsHtml =
-                        '<div class="text-center py-12 text-gray-400 dark:text-gray-500 flex flex-col items-center"><i class="fas fa-exclamation-circle text-5xl mb-2"></i><p class="font-bold">Nenhum aluno encontrado</p></div>';
+                        '<div class="empty-state"><i class="fas fa-user-graduate"></i><h3>Nenhum aluno matriculado</h3><p>Adicione alunos a esta turma através da aba "Alunos" na criação da turma.</p></div>';
                 }
 
                 contentHtml =
@@ -1800,11 +1939,17 @@
                     '</span>' +
                     '<span class="text-xs text-gray-500 dark:text-gray-400">| Presença média: ' + stats
                     .averageAttendance + '</span>' +
+                    '<span class="text-xs text-gray-500 dark:text-gray-400">| Média turma: ' + stats.mediaTurma +
+                    '</span>' +
+                    '<span class="text-xs text-gray-500 dark:text-gray-400">| Aprovados: ' + stats.aprovados +
+                    ' / ' + (stats.aprovados + stats.reprovados) + '</span>' +
                     '</div>' +
                     '<div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">' +
                     ['todos', 'aprovados', 'recuperacao', 'melhorando', 'queda'].map(function(f) {
-                        var labels = { todos: 'Todos', aprovados: 'Aprovados (≥7.0)',
-                            recuperacao: 'Recuperação (<7.0)', melhorando: 'Em Crescimento',
+                        var labels = { todos: 'Todos', aprovados: 'Aprovados (≥' + NOTA_MINIMA_APROVACAO +
+                                ')',
+                            recuperacao: 'Recuperação (<' + NOTA_MINIMA_APROVACAO + ')',
+                            melhorando: 'Em Crescimento',
                             queda: 'Em Queda' };
                         var active = App.activeFilter === f ? 'bg-[#7aa2a1] text-white' :
                             'bg-[#e8f1f1] dark:bg-slate-700 text-[#7aa2a1] dark:text-slate-300';
@@ -1827,18 +1972,56 @@
                         colorClass + '" style="width:' + val + '%"></div></div></div>';
                 }
 
+                var sortedStudents = students.slice().sort(function(a, b) { return b.gpa - a.gpa; });
+
                 contentHtml =
                     '<div class="p-6 flex-1 space-y-8 overflow-y-auto">' +
-                    '<div class="grid grid-cols-2 gap-4">' +
+                    '<div class="grid grid-cols-2 md:grid-cols-4 gap-4">' +
                     '<div class="bg-white dark:bg-slate-700 p-5 rounded-3xl border dark:border-slate-600 text-center"><span class="text-xs text-gray-400 dark:text-gray-500 font-bold uppercase">Presença Média</span><h4 class="text-3xl font-black text-[#7aa2a1] mt-1">' +
                     cls.statistics.averageAttendance + '</h4></div>' +
-                    '<div class="bg-white dark:bg-slate-700 p-5 rounded-3xl border dark:border-slate-600 text-center"><span class="text-xs text-gray-400 dark:text-gray-500 font-bold uppercase">Questão Crítica</span><h4 class="text-sm font-black text-red-500 mt-2">' +
-                    cls.statistics.worstQuestion + '</h4></div></div>' +
+                    '<div class="bg-white dark:bg-slate-700 p-5 rounded-3xl border dark:border-slate-600 text-center"><span class="text-xs text-gray-400 dark:text-gray-500 font-bold uppercase">Média da Turma</span><h4 class="text-3xl font-black text-[#7aa2a1] mt-1">' +
+                    cls.statistics.mediaTurma + '</h4></div>' +
+                    '<div class="bg-white dark:bg-slate-700 p-5 rounded-3xl border dark:border-slate-600 text-center"><span class="text-xs text-gray-400 dark:text-gray-500 font-bold uppercase">Aprovados</span><h4 class="text-3xl font-black text-green-500 mt-1">' +
+                    cls.statistics.aprovados + '</h4></div>' +
+                    '<div class="bg-white dark:bg-slate-700 p-5 rounded-3xl border dark:border-slate-600 text-center"><span class="text-xs text-gray-400 dark:text-gray-500 font-bold uppercase">Reprovados</span><h4 class="text-3xl font-black text-red-500 mt-1">' +
+                    cls.statistics.reprovados + '</h4></div></div>' +
+
+                    '<div class="bg-white dark:bg-slate-700 p-6 rounded-3xl border dark:border-slate-600">' +
+                    '<h4 class="text-xs font-black tracking-widest text-gray-400 dark:text-gray-500 uppercase mb-4">Ranking de Desempenho</h4>' +
+                    '<div class="space-y-3">' +
+                    sortedStudents.map(function(s, index) {
+                        var pos = index + 1;
+                        var medal = pos === 1 ? '🥇' : pos === 2 ? '🥈' : pos === 3 ? '🥉' : '#' + pos;
+                        var initials = getInitials(s.name);
+                        var statusClass = getStatusClass(s.gpa);
+                        return '<div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-slate-800 rounded-xl">' +
+                            '<div class="flex items-center gap-3"><span class="font-bold text-gray-400 w-8">' +
+                            medal + '</span>' +
+                            '<div class="student-avatar-placeholder w-8 h-8 text-sm">' + initials +
+                            '</div>' +
+                            '<div><p class="text-sm font-bold text-gray-800 dark:text-white">' + s.name +
+                            '</p><p class="text-[10px] text-gray-400 dark:text-gray-500">' + s
+                            .testCount + ' provas</p></div></div>' +
+                            '<div class="flex items-center gap-4"><span class="status-badge ' +
+                            statusClass + ' text-xs">' + s.gpa + '</span>' +
+                            '<span class="text-xs font-bold text-gray-400">' + (s.gpa >=
+                                NOTA_MINIMA_APROVACAO ? '✅' : '❌') + '</span></div></div>';
+                    }).join('') +
+                    '</div></div>' +
+
                     '<div class="bg-white dark:bg-slate-700 p-6 rounded-3xl border dark:border-slate-600"><h4 class="text-xs font-black tracking-widest text-gray-400 dark:text-gray-500 uppercase mb-4">Heatmap de Dificuldades por Conteúdo</h4><div class="space-y-4">' +
                     heatmapHtml + '</div></div>' +
+
                     '<div class="bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/50 p-6 rounded-3xl">' +
                     '<h4 class="text-sm font-black text-indigo-950 dark:text-indigo-400 uppercase mb-2 flex items-center gap-2"><i class="fas fa-sparkles"></i> Diagnóstico Geral da Turma (IA)</h4>' +
-                    '<p class="text-xs text-indigo-900 dark:text-indigo-300 leading-relaxed">As pontuações sugerem que a turma demonstra sólida compreensão em Ortografia e Sintaxe. Contudo, há um défice registado em estruturas gramaticais complexas. Recomenda-se reforço direcionado.</p>' +
+                    '<p class="text-xs text-indigo-900 dark:text-indigo-300 leading-relaxed">A turma apresenta um desempenho ' +
+                    (stats.mediaTurma >= 7.0 ? 'excelente' : stats.mediaTurma >= 5.0 ? 'regular' :
+                        'preocupante') +
+                    ', com média de ' + stats.mediaTurma + '. ' +
+                    (stats.aprovados > stats.reprovados ?
+                        'A maioria dos alunos está aprovada. Parabéns!' :
+                        'É recomendado reforço para os alunos em recuperação.') +
+                    ' As principais dificuldades estão em <strong>' + stats.worstQuestion + '</strong>.</p>' +
                     '</div></div>';
             }
 
@@ -1848,6 +2031,7 @@
                 '<div class="text-center"><h2 class="text-lg font-black text-gray-800 dark:text-slate-100">' +
                 cls.name + '</h2><p class="text-xs text-gray-400 dark:text-gray-500 font-bold uppercase mt-0.5">Média: ' +
                 cls.average + '/10 | Aulas: ' + totalAulas + ' | Presença: ' + stats.averageAttendance +
+                ' | Aprovados: ' + stats.aprovados + '/' + (stats.aprovados + stats.reprovados) +
                 '</p></div>' +
                 '<div class="w-10"></div></div>' +
                 '<div class="flex border-b dark:border-slate-700">' +
@@ -1862,11 +2046,12 @@
                 contentHtml +
                 modalFaltaHtml +
                 modalPresencaHtml +
+                modalNotaHtml +
                 '</div>';
         }
 
         // ============================================================
-        // FUNÇÕES DE PRESENÇA E FALTAS
+        // FUNÇÕES DE PRESENÇA, FALTAS E NOTAS
         // ============================================================
         function adicionarAula() {
             var cls = App.selectedClass;
@@ -1996,13 +2181,99 @@
             render();
         }
 
+        function abrirModalNota(alunoId) {
+            App.modalNota.alunoId = alunoId;
+            App.modalNota.titulo = '';
+            App.modalNota.nota = 0;
+            App.modalNota.data = new Date().toISOString().split('T')[0];
+            App.mostrarModalNota = true;
+            render();
+        }
+
+        function confirmarNota() {
+            var cls = App.selectedClass;
+            if (!cls) return;
+
+            var alunoId = App.modalNota.alunoId;
+            var titulo = App.modalNota.titulo.trim();
+            var nota = App.modalNota.nota;
+            var data = App.modalNota.data || new Date().toLocaleDateString('pt-PT');
+
+            if (!titulo) {
+                alert('Por favor, insira um título para a prova.');
+                return;
+            }
+            if (nota <= 0 || nota > 10) {
+                alert('Por favor, insira uma nota válida entre 0 e 10.');
+                return;
+            }
+
+            var alunoEncontrado = null;
+            for (var i = 0; i < cls.students.length; i++) {
+                if (cls.students[i].id === alunoId) {
+                    alunoEncontrado = cls.students[i];
+                    break;
+                }
+            }
+
+            if (!alunoEncontrado) {
+                alert('Aluno não encontrado.');
+                return;
+            }
+
+            var novaProva = {
+                id: 'manual-' + Date.now(),
+                title: titulo,
+                grade: nota,
+                date: data,
+                correct: Math.round(nota * 2),
+                wrong: Math.round((10 - nota) * 2),
+                details: getRandomDetails(20)
+            };
+
+            alunoEncontrado.history = alunoEncontrado.history || [];
+            alunoEncontrado.history.push(novaProva);
+            updateStudentStats(alunoEncontrado);
+
+            // Recalcular média da turma
+            var totalGpa = 0;
+            for (var j = 0; j < cls.students.length; j++) {
+                totalGpa += cls.students[j].gpa || 0;
+            }
+            cls.average = cls.students.length > 0 ? parseFloat((totalGpa / cls.students.length).toFixed(1)) : 0;
+
+            cls.statistics = calcularEstatisticasTurma(cls.students, cls.totalAulas);
+
+            for (var k = 0; k < App.classes.length; k++) {
+                if (App.classes[k].id === cls.id) {
+                    App.classes[k] = cls;
+                    break;
+                }
+            }
+
+            App.mostrarModalNota = false;
+            App.mensagemToast = 'Nota adicionada com sucesso!';
+            App.showSyncSuccess = true;
+            render();
+            setTimeout(function() {
+                App.showSyncSuccess = false;
+                render();
+            }, 3000);
+        }
+
+        function cancelarNota() {
+            App.mostrarModalNota = false;
+            App.modalNota = { alunoId: '', titulo: '', nota: 0, data: '' };
+            render();
+        }
+
         function getSortedStudents(list) {
             var result = (list || []).slice();
             var filter = App.activeFilter;
             var search = App.searchQuery.toLowerCase();
 
-            if (filter === 'aprovados') result = result.filter(function(s) { return s.gpa >= 7.0; });
-            else if (filter === 'recuperacao') result = result.filter(function(s) { return s.gpa < 7.0; });
+            if (filter === 'aprovados') result = result.filter(function(s) { return s.gpa >= NOTA_MINIMA_APROVACAO; });
+            else if (filter === 'recuperacao') result = result.filter(function(s) { return s.gpa < NOTA_MINIMA_APROVACAO; });
             else if (filter === 'melhorando') result = result.filter(function(s) { return s.trend === 'up'; });
             else if (filter === 'queda') result = result.filter(function(s) { return s.trend === 'down'; });
 
@@ -2039,7 +2310,7 @@
         }
 
         // ============================================================
-        // ALUNO DETALHE - COM PRESENÇA
+        // ALUNO DETALHE - COM AVALIAÇÃO COMPLETA
         // ============================================================
         function renderAlunoDetalhe() {
             var student = App.selectedStudent;
@@ -2050,20 +2321,33 @@
             var presencaPercent = calcularPresencaAluno(student, totalAulas);
             var presencaClass = getPresencaClass(presencaPercent);
 
+            var mediaTurma = cls ? cls.statistics.mediaTurma || 0 : 0;
+            var avaliacao = avaliarAluno(student, mediaTurma);
+            var aprovado = student.gpa >= NOTA_MINIMA_APROVACAO;
+
             var historyHtml = '';
-            for (var hi = 0; hi < (student.history || []).length; hi++) {
-                var test = student.history[hi];
-                var gradeClass = test.grade >= 7.0 ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' :
-                    'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400';
-                historyHtml +=
-                    '<div onclick="App.selectedHistoricalTest=\'' + test.id +
-                    '\';render();" class="bg-white dark:bg-slate-700 border border-gray-100 dark:border-slate-600 p-4 rounded-2xl flex justify-between items-center cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-600/50 transition-colors shadow-xs">' +
-                    '<div><h5 class="font-bold text-gray-800 dark:text-white text-sm">' + test.title +
-                    '</h5><p class="text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase mt-1">Corrigido em ' +
-                    test.date + '</p></div>' +
-                    '<div class="flex items-center gap-3"><span class="text-sm font-black px-3 py-1 rounded-xl ' +
-                    gradeClass + '">' + test.grade + '</span><i class="fas fa-chevron-right text-gray-400"></i></div>' +
-                    '</div>';
+            if (student.history && student.history.length > 0) {
+                // Ordenar do mais recente para o mais antigo
+                var sortedHistory = student.history.slice().reverse();
+                for (var hi = 0; hi < sortedHistory.length; hi++) {
+                    var test = sortedHistory[hi];
+                    var gradeClass = test.grade >= 7.0 ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' :
+                        test.grade >= 5.0 ?
+                        'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400' :
+                        'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400';
+                    historyHtml +=
+                        '<div onclick="App.selectedHistoricalTest=\'' + test.id +
+                        '\';render();" class="bg-white dark:bg-slate-700 border border-gray-100 dark:border-slate-600 p-4 rounded-2xl flex justify-between items-center cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-600/50 transition-colors shadow-xs">' +
+                        '<div><h5 class="font-bold text-gray-800 dark:text-white text-sm">' + test.title +
+                        '</h5><p class="text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase mt-1">' +
+                        test.date + '</p></div>' +
+                        '<div class="flex items-center gap-3"><span class="text-sm font-black px-3 py-1 rounded-xl ' +
+                        gradeClass + '">' + test.grade + '/10</span><i class="fas fa-chevron-right text-gray-400"></i></div>' +
+                        '</div>';
+                }
+            } else {
+                historyHtml =
+                    '<div class="empty-state py-8"><i class="fas fa-file-alt"></i><h3>Nenhuma prova registrada</h3><p>Este aluno ainda não possui provas no histórico. Adicione uma nota clicando no botão "Adicionar Nota" na lista da turma.</p></div>';
             }
 
             var testDetailHtml = '';
@@ -2088,7 +2372,7 @@
                         '<button onclick="App.selectedHistoricalTest=null;render();" class="absolute top-4 right-4 text-gray-400 hover:text-black dark:hover:text-white transition-colors"><i class="fas fa-times text-xl"></i></button>' +
                         '<h4 class="font-black text-gray-800 dark:text-white mb-2 text-md">Gabarito: ' + found
                         .title + '</h4>' +
-                        '<p class="text-xs text-gray-400 dark:text-gray-500 mb-6 font-semibold">Nota final: ' +
+                        '<p class="text-xs text-gray-400 dark:text-gray-500 mb-6 font-semibold">Nota: ' +
                         found.grade + '/10 | ' + found.correct + ' Acertos e ' + found.wrong + ' Erros</p>' +
                         '<div class="question-grid">' + qHtml + '</div></div>';
                 }
@@ -2096,6 +2380,30 @@
 
             var trendIcon = student.trend === 'up' ? '📈' : '📉';
             var initials = getInitials(student.name);
+            var statusClass = getStatusClass(student.gpa);
+            var statusIcon = getStatusIcon(student.gpa);
+            var statusLabel = getStatusLabel(student.gpa);
+
+            // Calcular evolução
+            var evolucao = 0;
+            var evolucaoLabel = 'Sem dados';
+            var evolucaoClass = 'text-gray-400';
+            if (student.history && student.history.length >= 2) {
+                var sorted = student.history.slice().sort(function(a, b) { return new Date(a.date) - new Date(b.date); });
+                var primeira = sorted[0].grade;
+                var ultima = sorted[sorted.length - 1].grade;
+                evolucao = parseFloat((ultima - primeira).toFixed(1));
+                if (evolucao > 0) {
+                    evolucaoLabel = '+' + evolucao + ' (Melhorou)';
+                    evolucaoClass = 'text-green-500';
+                } else if (evolucao < 0) {
+                    evolucaoLabel = evolucao + ' (Piorou)';
+                    evolucaoClass = 'text-red-500';
+                } else {
+                    evolucaoLabel = '0 (Estável)';
+                    evolucaoClass = 'text-yellow-500';
+                }
+            }
 
             return '<div class="flex-1 flex flex-col bg-white dark:bg-slate-800 max-w-4xl mx-auto w-full">' +
                 renderSimpleHeader('Dossiê do Aluno') +
@@ -2104,34 +2412,67 @@
                 '<div class="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center text-4xl font-black text-white border-4 border-white/20">' +
                 initials +
                 '</div>' +
-                '<div class="text-center sm:text-left"><h3 class="text-2xl font-black">' + student.name +
-                '</h3><p class="text-xs font-semibold opacity-90 uppercase mt-0.5">Número de Chamada: ' +
-                student.number + ' | ' + (cls ? cls.name : '') +
-                '</p><p class="text-xs font-semibold opacity-80 mt-1">Provas: ' + student.testCount +
-                ' | Tendência: ' + trendIcon +
-                '</p>' +
-                '<div class="flex items-center gap-2 mt-1">' +
-                '<span class="presenca-badge ' + presencaClass + '">Presença: ' + presencaPercent + '%</span>' +
+                '<div class="text-center sm:text-left flex-1">' +
+                '<h3 class="text-2xl font-black">' + student.name + '</h3>' +
+                '<p class="text-xs font-semibold opacity-90 uppercase mt-0.5">Número de Chamada: ' + student.number +
+                ' | ' + (cls ? cls.name : '') + '</p>' +
+                '<div class="flex flex-wrap items-center gap-3 mt-2">' +
+                '<span class="text-xs font-semibold opacity-80">Provas: ' + student.testCount + '</span>' +
+                '<span class="text-xs font-semibold opacity-80">Tendência: ' + trendIcon + '</span>' +
+                '<span class="presenca-badge ' + presencaClass + ' text-xs">Presença: ' + presencaPercent +
+                '%</span>' +
                 '<span class="text-xs font-semibold opacity-80">(' + student.presencas + '/' + totalAulas +
                 ' aulas) | Faltas: ' + (student.faltas || 0) + '</span>' +
+                '</div></div>' +
+                '<div class="text-right">' +
+                '<span class="status-badge ' + statusClass + ' text-base px-4 py-2"><i class="fas ' +
+                statusIcon + '"></i> ' + statusLabel + '</span>' +
+                '<p class="text-xs font-semibold opacity-80 mt-1">' + (aprovado ? '✅ Aprovado' :
+                    '❌ Reprovado') + '</p>' +
+                '<p class="text-xs font-semibold opacity-70 mt-1">Média da turma: ' + mediaTurma + '</p>' +
+                '</div></div>' +
+
+                '<div class="grid grid-cols-2 md:grid-cols-4 gap-4">' +
+                '<div class="bg-white dark:bg-slate-700 border dark:border-slate-600 p-4 rounded-2xl text-center shadow-sm"><span class="text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase">Média Geral</span><p class="text-2xl font-black mt-1 ' +
+                getGradeColor(student.gpa) + '">' + student.gpa + '/10</p></div>' +
+                '<div class="bg-white dark:bg-slate-700 border dark:border-slate-600 p-4 rounded-2xl text-center shadow-sm"><span class="text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase">Última Nota</span><p class="text-2xl font-black mt-1 text-gray-700 dark:text-slate-200">' +
+                student.lastGrade + '/10</p></div>' +
+                '<div class="bg-white dark:bg-slate-700 border dark:border-slate-600 p-4 rounded-2xl text-center shadow-sm"><span class="text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase">Taxa de Acerto</span><p class="text-2xl font-black mt-1 text-[#7aa2a1]">' +
+                student.successRate + '%</p></div>' +
+                '<div class="bg-white dark:bg-slate-700 border dark:border-slate-600 p-4 rounded-2xl text-center shadow-sm"><span class="text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase">Evolução</span><p class="text-2xl font-black mt-1 ' +
+                evolucaoClass + '">' + evolucaoLabel + '</p></div></div>' +
+
+                '<div class="bg-white dark:bg-slate-700 p-5 rounded-2xl border dark:border-slate-600">' +
+                '<h4 class="text-xs font-black tracking-widest text-gray-400 dark:text-gray-500 uppercase mb-3">Avaliação em Relação à Turma</h4>' +
+                '<div class="flex items-center gap-4">' +
+                '<div class="flex-1">' +
+                '<div class="flex justify-between text-xs text-gray-500 dark:text-gray-400 mb-1">' +
+                '<span>Posição: ' + avaliacao.label + '</span>' +
+                '<span>Diferença: ' + (avaliacao.diff >= 0 ? '+' : '') + avaliacao.diff.toFixed(1) +
+                ' da média</span>' +
+                '</div>' +
+                '<div class="progress-bar-container">' +
+                '<div class="progress-bar-fill ' + avaliacao.status + '" style="width:' + Math.min(100, (student
+                    .gpa / 10) * 100) + '%"></div>' +
+                '</div>' +
+                '<div class="flex justify-between text-[10px] text-gray-400 mt-1">' +
+                '<span>0</span><span>Média: ' + mediaTurma + '</span><span>10</span>' +
+                '</div>' +
+                '</div>' +
+                '<div class="text-center">' +
+                '<span class="text-3xl font-black ' + (student.gpa >= mediaTurma ? 'text-green-500' :
+                    'text-red-500') + '">' + (student.gpa >= mediaTurma ? '⬆' : '⬇') + '</span>' +
                 '</div></div></div>' +
-                '<div class="grid grid-cols-3 gap-4">' +
-                '<div class="bg-white dark:bg-slate-700 border dark:border-slate-600 p-4 rounded-2xl text-center shadow-sm"><span class="text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase">Média Geral</span><p class="text-xl font-black mt-1 ' +
-                getGradeColor(student.gpa) + '">' + student.gpa + '</p></div>' +
-                '<div class="bg-white dark:bg-slate-700 border dark:border-slate-600 p-4 rounded-2xl text-center shadow-sm"><span class="text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase">Última Nota</span><p class="text-xl font-black mt-1 text-gray-700 dark:text-slate-200">' +
-                student.lastGrade + '</p></div>' +
-                '<div class="bg-white dark:bg-slate-700 border dark:border-slate-600 p-4 rounded-2xl text-center shadow-sm"><span class="text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase">Taxa de Acerto</span><p class="text-xl font-black mt-1 text-[#7aa2a1]">' +
-                student.successRate + '%</p></div></div>' +
-                '<div><h4 class="text-xs font-black tracking-widest text-gray-400 dark:text-gray-500 uppercase mb-4">Histórico de Provas Corrigidas</h4><div class="space-y-3">' +
-                historyHtml + '</div></div>' +
+
+                '<div><h4 class="text-xs font-black tracking-widest text-gray-400 dark:text-gray-500 uppercase mb-4">Histórico de Provas (' +
+                (student.history || []).length + ')</h4><div class="space-y-3">' + historyHtml + '</div></div>' +
                 testDetailHtml +
                 '</div></div>';
         }
 
         // ============================================================
-        // NOVA TURMA, RELATORIOS E DEMAIS FUNÇÕES
+        // NOVA TURMA
         // ============================================================
-
         function renderNovaTurma() {
             var tab = App.activeTab || 'config';
 
@@ -2160,7 +2501,9 @@
                 '</div></div>' +
 
                 '<div class="bg-blue-50 dark:bg-blue-950/30 p-4 rounded-2xl border border-blue-100 dark:border-blue-900">' +
-                '<p class="text-xs text-blue-800 dark:text-blue-300"><i class="fas fa-info-circle"></i> As estatísticas de presença e heatmap serão calculadas automaticamente pelo sistema conforme os alunos forem adicionados e as aulas forem registradas.</p>' +
+                '<p class="text-xs text-blue-800 dark:text-blue-300"><i class="fas fa-info-circle"></i> As estatísticas de presença, média da turma e heatmap serão calculadas automaticamente pelo sistema conforme os alunos forem adicionados e as notas forem registradas.</p>' +
+                '<p class="text-xs text-blue-800 dark:text-blue-300 mt-2"><i class="fas fa-graduation-cap"></i> Nota mínima para aprovação: ' +
+                NOTA_MINIMA_APROVACAO + '</p>' +
                 '</div></div>';
 
             var alunosHtml = '<div class="space-y-6">' +
@@ -2193,7 +2536,7 @@
                 alunosHtml += '</div>';
             } else {
                 alunosHtml +=
-                    '<div class="text-center py-8 text-gray-400 dark:text-gray-500"><i class="fas fa-users text-4xl mb-2"></i><p class="text-sm">Nenhum aluno adicionado ainda</p><p class="text-xs">Clique em "Adicionar Aluno" para começar</p></div>';
+                    '<div class="empty-state py-8"><i class="fas fa-user-plus"></i><h3>Nenhum aluno adicionado</h3><p>Clique em "Adicionar Aluno" para começar a matricular.</p></div>';
             }
 
             alunosHtml += '</div></div>';
@@ -2307,6 +2650,7 @@
                     var stats = calculateStudentStats(aluno);
                     aluno.successRate = stats.successRate;
                     aluno.testCount = stats.testCount;
+                    aluno.trend = stats.trend;
                 }
             }
 
@@ -2319,8 +2663,8 @@
                 alert('Por favor, insira um título para a prova.');
                 return;
             }
-            if (prova.grade <= 0) {
-                alert('Por favor, insira uma nota válida.');
+            if (prova.grade <= 0 || prova.grade > 10) {
+                alert('Por favor, insira uma nota válida entre 0 e 10.');
                 return;
             }
 
@@ -2336,8 +2680,8 @@
                     title: prova.title,
                     grade: prova.grade,
                     date: prova.date || new Date().toLocaleDateString('pt-PT'),
-                    correct: prova.correct || 0,
-                    wrong: prova.wrong || 0,
+                    correct: prova.correct || Math.round(prova.grade * 2),
+                    wrong: prova.wrong || Math.round((10 - prova.grade) * 2),
                     details: getRandomDetails(20)
                 };
 
@@ -2346,8 +2690,16 @@
                 updateStudentStats(alunos[i]);
             }
 
+            // Recalcular média da turma
+            var totalGpa = 0;
+            for (var j = 0; j < alunos.length; j++) {
+                totalGpa += alunos[j].gpa || 0;
+            }
+            var mediaTurma = alunos.length > 0 ? parseFloat((totalGpa / alunos.length).toFixed(1)) : 0;
+
             var totalAulas = App.novaTurma.totalAulas || 0;
             App.novaTurma.statistics = calcularEstatisticasTurma(alunos, totalAulas);
+            App.novaTurma.statistics.mediaTurma = mediaTurma;
 
             App.novaProva = { title: '', grade: 0, date: '', correct: 0, wrong: 0 };
 
@@ -2378,6 +2730,7 @@
 
             var totalAulas = App.novaTurma.totalAulas || 0;
             var stats = calcularEstatisticasTurma(alunos, totalAulas);
+            stats.mediaTurma = average;
 
             var novaTurma = {
                 id: 'turma-' + Date.now(),
@@ -2402,6 +2755,9 @@
                 statistics: {
                     averageAttendance: '0%',
                     worstQuestion: '-',
+                    mediaTurma: 0,
+                    aprovados: 0,
+                    reprovados: 0,
                     heatmap: { 'Interpretação': 0, 'Gramática': 0, 'Pontuação': 0, 'Ortografia': 0 }
                 }
             };
@@ -2422,6 +2778,9 @@
                     statistics: {
                         averageAttendance: '0%',
                         worstQuestion: '-',
+                        mediaTurma: 0,
+                        aprovados: 0,
+                        reprovados: 0,
                         heatmap: { 'Interpretação': 0, 'Gramática': 0, 'Pontuação': 0, 'Ortografia': 0 }
                     }
                 };
@@ -2437,15 +2796,21 @@
         // ============================================================
         function renderRelatorios() {
             var cls = App.selectedClass;
-            if (!cls) return '<div class="p-8 text-center">Selecione uma turma</div>';
+            if (!cls) {
+                return '<div class="flex-1 flex flex-col bg-white dark:bg-slate-800 max-w-4xl mx-auto w-full">' +
+                    renderSimpleHeader('Relatórios') +
+                    '<div class="flex-1 flex items-center justify-center p-8">' +
+                    '<div class="empty-state"><i class="fas fa-chart-pie"></i><h3>Nenhuma turma selecionada</h3><p>Selecione uma turma para visualizar os relatórios.</p><button onclick="navigateTo(\'salas\')" class="btn-secondary mt-4">Ir para Salas</button></div>' +
+                    '</div></div>';
+            }
 
             var totalAulas = cls.totalAulas || 0;
             var stats = calcularEstatisticasTurma(cls.students || [], totalAulas);
             cls.statistics = stats;
 
             var students = cls.students || [];
-            var aprovados = students.filter(function(s) { return s.gpa >= 7.0; }).length;
-            var recuperacao = students.filter(function(s) { return s.gpa < 7.0; }).length;
+            var aprovados = students.filter(function(s) { return s.gpa >= NOTA_MINIMA_APROVACAO; }).length;
+            var recuperacao = students.filter(function(s) { return s.gpa < NOTA_MINIMA_APROVACAO; }).length;
 
             var sorted = students.slice().sort(function(a, b) { return b.gpa - a.gpa; });
             var melhor = sorted.length > 0 ? sorted[0] : null;
@@ -2468,12 +2833,13 @@
             }
 
             var studentsListHtml = '';
-            var limit = Math.min(5, students.length);
+            var limit = Math.min(10, students.length);
             for (var si = 0; si < limit; si++) {
                 var s = students[si];
                 var initials = getInitials(s.name);
                 var presenca = calcularPresencaAluno(s, totalAulas);
                 var prescClass = getPresencaClass(presenca);
+                var statusClass = getStatusClass(s.gpa);
                 studentsListHtml +=
                     '<div onclick="selectStudentRelatorio(\'' + s.id +
                     '\')" class="flex items-center justify-between p-3 hover:bg-[#e8f1f1] dark:hover:bg-slate-700 rounded-xl cursor-pointer transition-colors">' +
@@ -2483,9 +2849,11 @@
                     '</p><p class="text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase">' + s
                     .testCount + ' provas</p>' +
                     '<span class="presenca-badge ' + prescClass + ' text-[10px]">' + presenca + '%</span></div></div>' +
-                    '<div class="flex items-center gap-4"><span class="text-sm font-black ' + getGradeColor(s
-                        .gpa) + '">' + s.gpa +
-                    '</span><i class="fas fa-chevron-right text-gray-300"></i></div></div>';
+                    '<div class="flex items-center gap-4"><span class="status-badge ' + statusClass +
+                    ' text-xs px-2 py-1">' + s.gpa + '</span>' +
+                    '<span class="text-xs font-bold text-gray-400">' + (s.gpa >= NOTA_MINIMA_APROVACAO ?
+                        '✅' : '❌') + '</span>' +
+                    '<i class="fas fa-chevron-right text-gray-300"></i></div></div>';
             }
 
             return '<div class="flex-1 flex flex-col bg-[#f8fafa] dark:bg-slate-900 w-full transition-colors h-screen overflow-hidden">' +
@@ -2517,7 +2885,10 @@
                 '<li>• A turma apresenta dificuldade em <strong>Interpretação Textual</strong> nas últimas 2 avaliações.</li>' +
                 '<li>• Notou-se um índice de erro anormal na <strong>Questão 12</strong> (Sintaxe).</li>' +
                 '<li>• O aluno <strong>' + (melhor ? melhor.name : 'N/A') +
-                '</strong> demonstrou a maior evolução de aprendizagem este mês.</li></ul></div></div>' +
+                '</strong> demonstrou a maior evolução de aprendizagem este mês.</li>' +
+                '<li>• Taxa de aprovação: ' + Math.round((aprovados / (aprovados + recuperacao)) * 100) +
+                '%</li>' +
+                '</ul></div></div>' +
                 '<div class="bg-white dark:bg-slate-800 p-6 rounded-3xl border border-gray-100 dark:border-slate-700 shadow-sm">' +
                 '<h4 class="text-xs font-black tracking-widest text-gray-400 dark:text-gray-500 uppercase mb-6 flex items-center gap-2"><i class="fas fa-chart-bar"></i> Heatmap de Dificuldades (Por Questão)</h4>' +
                 '<div class="heatmap-grid">' + heatmapHtml +
@@ -2552,21 +2923,23 @@
             content += 'Média Geral: ' + cls.average + '\n';
             content += 'Presença Média: ' + cls.statistics.averageAttendance + '\n';
             content += 'Total de Aulas: ' + (cls.totalAulas || 0) + '\n';
-            content += 'Pior Questão: ' + cls.statistics.worstQuestion + '\n\n';
+            content += 'Pior Questão: ' + cls.statistics.worstQuestion + '\n';
+            content += 'Nota Mínima para Aprovação: ' + NOTA_MINIMA_APROVACAO + '\n\n';
             content += 'Heatmap:\n';
             for (var key in cls.statistics.heatmap) {
                 content += '  ' + key + ': ' + cls.statistics.heatmap[key] + '%\n';
             }
             var students = cls.students || [];
-            var aprovados = students.filter(function(s) { return s.gpa >= 7.0; }).length;
-            var recuperacao = students.filter(function(s) { return s.gpa < 7.0; }).length;
+            var aprovados = students.filter(function(s) { return s.gpa >= NOTA_MINIMA_APROVACAO; }).length;
+            var recuperacao = students.filter(function(s) { return s.gpa < NOTA_MINIMA_APROVACAO; }).length;
             content += '\nAprovados: ' + aprovados + ' | Em Recuperação: ' + recuperacao + '\n\n';
             content += 'ALUNOS:\n';
             for (var i = 0; i < students.length; i++) {
                 var s = students[i];
                 var pres = calcularPresencaAluno(s, cls.totalAulas);
                 content += '  ' + s.name + ' | Média: ' + s.gpa + ' | Presença: ' + pres + '% | Faltas: ' + (s
-                    .faltas || 0) + '\n';
+                    .faltas || 0);
+                content += s.gpa >= NOTA_MINIMA_APROVACAO ? ' | APROVADO\n' : ' | REPROVADO\n';
             }
             var blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
             var url = URL.createObjectURL(blob);
@@ -2582,7 +2955,6 @@
         // ============================================================
         // FUNÇÕES RESTANTES (Aplicar Prova, Import, Scan, Confirm, Results, Compare, Tips, Charts, Discursive, AiResult)
         // ============================================================
-
         function renderAplicarProva() {
             var cls = App.selectedClass;
             if (!cls) return '<div class="p-8 text-center">Selecione uma turma</div>';
@@ -2790,6 +3162,7 @@
                         }
                         var totalAulas = cls.totalAulas || 0;
                         var stats = calcularEstatisticasTurma(updatedStudents, totalAulas);
+                        stats.mediaTurma = parseFloat((sumClass / updatedStudents.length).toFixed(1));
                         return {
                             id: cls.id,
                             name: cls.name,
@@ -2986,6 +3359,11 @@
             var hasOfficial = App.officialGabarito !== null;
             var hasStudent = App.studentGabarito !== null;
 
+            var classOptions = '';
+            for (var ci = 0; ci < App.classes.length; ci++) {
+                classOptions += '<option value="' + App.classes[ci].id + '">' + App.classes[ci].name + '</option>';
+            }
+
             var targetClass = null;
             for (var i = 0; i < App.classes.length; i++) {
                 if (App.classes[i].id === App.selectedTargetClass) {
@@ -2999,11 +3377,6 @@
             for (var si = 0; si < targetClass.students.length; si++) {
                 var s = targetClass.students[si];
                 studentOptions += '<option value="' + s.id + '">' + s.name + ' (Nº ' + s.number + ')</option>';
-            }
-
-            var classOptions = '';
-            for (var ci = 0; ci < App.classes.length; ci++) {
-                classOptions += '<option value="' + App.classes[ci].id + '">' + App.classes[ci].name + '</option>';
             }
 
             return '<div class="flex-1 flex flex-col bg-white dark:bg-slate-800 max-w-3xl mx-auto w-full">' +
@@ -3096,6 +3469,7 @@
                         }
                         var totalAulas = cls.totalAulas || 0;
                         var stats = calcularEstatisticasTurma(updatedStudents, totalAulas);
+                        stats.mediaTurma = parseFloat((sum / updatedStudents.length).toFixed(1));
                         return {
                             id: cls.id,
                             name: cls.name,
@@ -3211,13 +3585,13 @@
 
         function renderTips() {
             var data = App.lastCorrectionData || {
-                studentName: 'Pedro H. Alves',
-                grade: 8.5,
-                mainDifficulty: 'Interpretação de Texto',
+                studentName: 'Aluno',
+                grade: 0,
+                mainDifficulty: 'Aguardando correção',
                 tipsList: [
-                    { title: "1. Leitura Focada", desc: "Ler pausadamente anotando as ideias principais." },
-                    { title: "2. Ampliar Vocabulário", desc: "Anotar e pesquisar o significado de palavras desconhecidas." },
-                    { title: "3. Praticar com Exercícios", desc: "Resolver questões de interpretação de textos variados." }
+                    { title: "1. Realize uma correção", desc: "Use a ferramenta de correção automática para gerar recomendações." },
+                    { title: "2. Analise os resultados", desc: "Verifique os pontos fortes e áreas que precisam de melhoria." },
+                    { title: "3. Aplique as sugestões", desc: "Utilize as recomendações para melhorar o desempenho." }
                 ]
             };
 
@@ -3249,13 +3623,13 @@
 
         function downloadTips() {
             var data = App.lastCorrectionData || {
-                studentName: 'Pedro H. Alves',
-                grade: 8.5,
-                mainDifficulty: 'Interpretação de Texto',
+                studentName: 'Aluno',
+                grade: 0,
+                mainDifficulty: 'Aguardando correção',
                 tipsList: [
-                    { title: "1. Leitura Focada", desc: "Ler pausadamente anotando as ideias principais." },
-                    { title: "2. Ampliar Vocabulário", desc: "Anotar e pesquisar o significado de palavras desconhecidas." },
-                    { title: "3. Praticar com Exercícios", desc: "Resolver questões de interpretação de textos variados." }
+                    { title: "1. Realize uma correção", desc: "Use a ferramenta de correção automática para gerar recomendações." },
+                    { title: "2. Analise os resultados", desc: "Verifique os pontos fortes e áreas que precisam de melhoria." },
+                    { title: "3. Aplique as sugestões", desc: "Utilize as recomendações para melhorar o desempenho." }
                 ]
             };
 
@@ -3282,13 +3656,13 @@
 
         function renderCharts() {
             var data = App.lastCorrectionData || {
-                studentName: 'Pedro H. Alves',
-                grade: 8.5,
+                studentName: 'Aluno',
+                grade: 0,
                 performanceDetails: [
-                    { label: 'Interpretação', val1: 45, val2: 25, val3: 15 },
-                    { label: 'Gramática', val1: 40, val2: 20, val3: 10 },
-                    { label: 'Pontuação', val1: 35, val2: 15, val3: 5 },
-                    { label: 'Escrita', val1: 50, val2: 30, val3: 20 }
+                    { label: 'Interpretação', val1: 0, val2: 0, val3: 0 },
+                    { label: 'Gramática', val1: 0, val2: 0, val3: 0 },
+                    { label: 'Pontuação', val1: 0, val2: 0, val3: 0 },
+                    { label: 'Escrita', val1: 0, val2: 0, val3: 0 }
                 ]
             };
 
@@ -3410,7 +3784,7 @@
 
             setTimeout(function() {
                 App.aiResult =
-                    '**Avaliação Pedagógica de Teste**\n\n**Aluno:** Pedro H. Alves\n\n**Nota Obtida: 8.5/10**\n\n**Análise do Professor:**\n* **Pontos Positivos:** Vocabulário excelente e argumentos lógicos fundamentados.\n* **Melhoria sugerida:** O aluno deve sintetizar os exemplos no encerramento da prova discursiva.\n* **Competências Desenvolvidas:** Capacidade de análise crítica e organização textual.\n\n**Recomendações:**\n- Praticar a escrita de conclusões mais concisas\n- Revisar a estrutura de parágrafos\n- Ampliar repertório de conectivos';
+                    '**Avaliação Pedagógica de Teste**\n\n**Aluno:** Aluno\n\n**Nota Obtida: 7.5/10**\n\n**Análise do Professor:**\n* **Pontos Positivos:** O aluno demonstra bom entendimento do conteúdo.\n* **Melhoria sugerida:** O aluno deve praticar mais exercícios de interpretação.\n* **Competências Desenvolvidas:** Capacidade de análise e organização textual.\n\n**Recomendações:**\n- Praticar a escrita de textos mais elaborados\n- Revisar a estrutura de parágrafos\n- Ampliar repertório de conectivos';
                 App.isAnalyzing = false;
                 navigateTo('ai_result');
             }, 2000);
